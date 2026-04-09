@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -225,6 +224,22 @@ model Permission {
   rolePermissions RolePermission[]
 
   @@map("permissions")
+}
+
+model UserProfile {
+  userId      String    @id @map("user_id") @db.VarChar(64)
+  name        String    @db.VarChar(120)
+  role        String    @db.VarChar(80)
+  city        String    @db.VarChar(100)
+  state       String    @db.VarChar(100)
+  country     String    @db.VarChar(100)
+  timezone    String    @db.VarChar(80)
+  bio         String    @db.Text
+  avatarUrl   String?   @map("avatar_url") @db.VarChar(500)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("user_profiles")
 }
 
 model RolePermission {

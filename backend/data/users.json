@@ -1,0 +1,34 @@
+[
+  {
+    "id": "user-1775625021869-qw0hatk8v",
+    "email": "alice@example.com",
+    "username": "aliceatwonder",
+    "displayName": "Alice",
+    "passwordHash": "$2b$10$5Sg8pU2wKOtfHvLhQ6Nk9uUgN/z6De4YOVtyvPuOfqDXUiCxt6PrK",
+    "role": "reader"
+  },
+  {
+    "id": "user-1775625032673-qdez37n30",
+    "email": "bob@example.com",
+    "username": "bobbybob",
+    "displayName": "Bob",
+    "passwordHash": "$2b$10$tuoGGCQljHgd.4YOWcb0F.SVn/QA1MiNTTelOUEEVZy7bVV9RoCHS",
+    "role": "reader"
+  },
+  {
+    "id": "user-seeded-test-001",
+    "email": "tester@manav.local",
+    "username": "manavtester",
+    "displayName": "Manav Tester",
+    "passwordHash": "$2b$10$HcYeFZafNUy8I8HLTJqwVObcbX2I0HUHjfPDQeoXIM4pADvgdMTTy",
+    "role": "reader"
+  },
+  {
+    "id": "user-1775626269396-si2m77xvk",
+    "email": "uttam@gmail.com",
+    "username": "uttam",
+    "displayName": "Uttan",
+    "passwordHash": "$2b$10$7gX5yn1sJfa/Apup446cFOxnMTPLTPlASOmYMUFC/TAIXLaXCEqTO",
+    "role": "reader"
+  }
+]

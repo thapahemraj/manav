@@ -1,0 +1,10 @@
+{
+  "name": "Drake",
+  "role": "Writer",
+  "city": "Los Angeles",
+  "state": "California",
+  "country": "United States",
+  "timezone": "PST (UTC-08:00)",
+  "bio": "Urdu poetry enthusiast sharing verses and literary reflections.",
+  "avatarUrl": "http://localhost:3001/uploads/avatar-1775560427606-468178131.png"
+}
