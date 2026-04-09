@@ -157,12 +157,12 @@ export default function SectionPage() {
   }
 
   return (
-    <main className={`relative isolate min-h-screen overflow-hidden transition-colors duration-300 ${isDark ? "text-white" : "text-[#182218]"}`}>
+    <main className={`relative isolate min-h-screen overflow-hidden transition-colors duration-300 ${isDark ? "bg-[#0e1117] text-white" : "bg-[#f3f5f8] text-[#10131a]"}`}>
 
       <div className="relative z-10">
       <nav
         className={`sticky top-0 z-40 border-b transition-colors ${
-          isDark ? "border-white/10 bg-[#13161b]/85 backdrop-blur-md" : "border-black/10 bg-[#f3f7ef]/86 backdrop-blur-md"
+          isDark ? "border-white/15 bg-[#17181d]/88 backdrop-blur-md" : "border-black/10 bg-[#f3f7ef]/86 backdrop-blur-md"
         }`}
       >
         <div className="mx-auto flex h-16 max-w-full items-center justify-between px-4 md:px-8">
@@ -210,7 +210,7 @@ export default function SectionPage() {
             </button>
             <Link
               href="/"
-              className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${isDark ? "border-white/15 bg-white/5 text-white/85 hover:bg-white/10" : "border-black/10 bg-white/92 text-[#203022] hover:bg-[#ebf3e9]"}`}
+              className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${isDark ? "border-white/20 bg-[#1f2229] text-white/85 hover:bg-[#2a2f39]" : "border-black/10 bg-white/92 text-[#203022] hover:bg-[#ebf3e9]"}`}
             >
               Home
             </Link>
@@ -219,7 +219,7 @@ export default function SectionPage() {
       </nav>
 
       <div className="px-2 py-5 sm:px-4 md:p-10">
-        <div className={`rounded-2xl border p-5 ${isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-white"}`}>
+        <div className={`rounded-2xl border p-5 ${isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white"}`}>
           <p className={`text-[12px] font-semibold tracking-[0.12em] ${isDark ? "text-white/55" : "text-[#637a63]"}`}>
             SECTION
           </p>
@@ -230,7 +230,7 @@ export default function SectionPage() {
           <p className={`mt-1 text-[13px] ${isDark ? "text-white/50" : "text-[#657a66]"}`}>{section.tone}</p>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <div className={`flex min-w-65 flex-1 items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f4f8f0]"}`}>
+            <div className={`flex min-w-65 flex-1 items-center gap-2 rounded-full border px-4 py-2 ${isDark ? "border-white/20 bg-[#101318]" : "border-black/10 bg-[#f4f8f0]"}`}>
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
@@ -261,7 +261,7 @@ export default function SectionPage() {
             filteredPosts.map((post) => (
               <article
                 key={`section-${post.id}`}
-                className={`rounded-2xl border p-4 ${isDark ? "border-white/15 bg-black/15" : "border-black/10 bg-white"}`}
+                className={`rounded-2xl border p-4 ${isDark ? "border-white/20 bg-[#1a1c22]" : "border-black/10 bg-white"}`}
               >
                 <div className="mb-3 flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">

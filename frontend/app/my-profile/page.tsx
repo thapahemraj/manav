@@ -275,7 +275,7 @@ export function MyProfileContent() {
 
   return (
     <main
-      className={`relative isolate min-h-screen px-2 py-5 transition-colors duration-300 sm:px-4 md:h-screen md:overflow-hidden md:p-10 ${isDark ? "text-white" : "text-[#10131a]"}`}
+      className={`relative isolate min-h-screen px-2 py-5 transition-colors duration-300 sm:px-4 md:h-screen md:overflow-hidden md:p-10 ${isDark ? "bg-[#0e1117] text-white" : "bg-[#f3f5f8] text-[#10131a]"}`}
     >
       <div className="relative z-10 h-full">
       <div className="flex min-h-[calc(100vh-2.5rem)] w-full items-center justify-center md:h-full md:min-h-0 md:items-start md:justify-start md:gap-14">
@@ -340,35 +340,6 @@ export function MyProfileContent() {
             </div>
 
             <div
-              className={`rounded-2xl border p-2 ${
-                isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f8f9fb]"
-              }`}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  logout();
-                  router.push("/login");
-                }}
-                className={`rounded-full border px-4 py-2.5 text-[13px] font-semibold transition ${
-                  isDark
-                    ? "border-red-500/35 bg-white/5 text-red-300 hover:bg-red-500/12"
-                    : "border-red-300/60 bg-white text-red-500 hover:bg-red-50"
-                }`}
-              >
-                Logout
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={openEditProfile}
-              className="w-full rounded-full bg-[#2ce88f] px-4 py-2.5 text-[15px] font-bold text-[#0b1112] transition hover:bg-[#45f39f]"
-            >
-              Edit Profile
-            </button>
-
-            <div
               className={`rounded-2xl border p-3 ${
                 isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f8f9fb]"
               }`}
@@ -428,6 +399,37 @@ export function MyProfileContent() {
               </button>
             </div>
 
+            <div
+              className={`rounded-2xl border p-2 ${
+                isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f8f9fb]"
+              }`}
+            >
+              <div className="flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={openEditProfile}
+                  className="w-full rounded-full bg-[#2ce88f] px-4 py-2.5 text-[15px] font-bold text-[#0b1112] transition hover:bg-[#45f39f]"
+                >
+                  Edit Profile
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout();
+                    router.push("/login");
+                  }}
+                  className={`w-full rounded-full border px-4 py-2.5 text-[13px] font-semibold transition ${
+                    isDark
+                      ? "border-red-500/35 bg-white/5 text-red-300 hover:bg-red-500/12"
+                      : "border-red-300/60 bg-white text-red-500 hover:bg-red-50"
+                  }`}
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+
           </div>
         </aside>
 
@@ -435,7 +437,7 @@ export function MyProfileContent() {
           <div className="shrink-0 px-6 pb-4 pt-1">
             <div
               className={`mx-auto flex w-full max-w-7xl items-center gap-3 rounded-[28px] border p-2.5 shadow-sm ${
-                isDark ? "border-white/10 bg-white/[0.04]" : "border-black/10 bg-[#f8faf5]"
+                isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-[#f8faf5]"
               }`}
             >
               <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto">
@@ -509,12 +511,12 @@ export function MyProfileContent() {
             <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 pt-2">
               <div
                 className={`rounded-[28px] border p-5 shadow-[0_18px_40px_rgba(0,0,0,0.18)] ${
-                  isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f8f9fb]"
+                  isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-[#f8f9fb]"
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className={`text-[12px] uppercase tracking-[0.16em] ${isDark ? "text-white/45" : "text-[#748196]"}`}>
+                    <p className={`text-[12px] uppercase tracking-[0.16em] ${isDark ? "text-white/55" : "text-[#748196]"}`}>
                       Composer
                     </p>
                     <h2 className={`mt-1 text-[28px] font-semibold leading-tight ${isDark ? "text-white/92" : "text-[#202634]"}`}>
@@ -552,7 +554,7 @@ export function MyProfileContent() {
                       placeholder={`Write something inspiring in ${activeTab.toLowerCase()}...`}
                       className={`min-h-44 w-full resize-none rounded-[22px] border px-4 py-4 text-[16px] leading-relaxed outline-none transition ${
                         isDark
-                          ? "border-white/15 bg-black/20 text-white placeholder:text-white/30 focus:border-[#2ce88f]/70"
+                          ? "border-white/20 bg-[#101318] text-white/95 placeholder:text-white/40 focus:border-[#2ce88f]/70"
                           : "border-black/10 bg-white text-[#1f2633] placeholder:text-[#7f8799] focus:border-[#00a86b]/60"
                       }`}
                     />
@@ -563,7 +565,7 @@ export function MyProfileContent() {
                           key={chip}
                           className={`rounded-full border px-3 py-1 text-[11px] font-semibold ${
                             isDark
-                              ? "border-white/15 bg-white/5 text-white/65"
+                              ? "border-white/18 bg-[#1f2229] text-white/78"
                               : "border-black/10 bg-[#ffffff] text-[#516074]"
                           }`}
                         >
@@ -575,7 +577,7 @@ export function MyProfileContent() {
                 </div>
 
                 <div className="mt-4 flex items-center justify-between gap-3 border-t pt-4">
-                  <div className={`text-[13px] ${isDark ? "text-white/55" : "text-[#70798d]"}`}>
+                  <div className={`text-[13px] ${isDark ? "text-white/65" : "text-[#70798d]"}`}>
                     <p className="font-medium">Visible to everyone</p>
                     <p className="mt-0.5 text-[12px]">{activeDraft.length}/500 characters</p>
                   </div>
@@ -585,7 +587,7 @@ export function MyProfileContent() {
                       onClick={() => setDraftByTab((prev) => ({ ...prev, [activeTab]: "" }))}
                       className={`rounded-full px-4 py-2 text-[14px] font-semibold transition ${
                         isDark
-                          ? "border border-white/15 bg-white/5 text-white/75 hover:bg-white/10"
+                          ? "border border-white/20 bg-[#1f2229] text-white/85 hover:bg-[#2a2f39]"
                           : "border border-black/10 bg-white text-[#334056] hover:bg-[#f2f4f8]"
                       }`}
                     >
@@ -612,7 +614,7 @@ export function MyProfileContent() {
 
               <div
                 className={`rounded-2xl border p-4 ${
-                  isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f8f9fb]"
+                  isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-[#f8f9fb]"
                 }`}
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
@@ -620,7 +622,7 @@ export function MyProfileContent() {
                     <h3 className={`text-[22px] font-semibold ${isDark ? "text-white/90" : "text-[#202634]"}`}>
                       Public Timeline
                     </h3>
-                    <p className={`mt-1 text-[13px] ${isDark ? "text-white/55" : "text-[#70798d]"}`}>
+                    <p className={`mt-1 text-[13px] ${isDark ? "text-white/62" : "text-[#70798d]"}`}>
                       Everything published from any section appears here.
                     </p>
                   </div>
@@ -639,7 +641,7 @@ export function MyProfileContent() {
                       type="button"
                       className={`rounded-full border px-3 py-1 text-[12px] font-semibold ${
                         isDark
-                          ? "border-white/20 bg-white/5 text-white/80"
+                          ? "border-white/20 bg-[#1f2229] text-white/85"
                           : "border-black/10 bg-white text-[#334056]"
                       }`}
                     >
@@ -652,7 +654,7 @@ export function MyProfileContent() {
                   {allPublicPosts.length === 0 ? (
                     <div
                       className={`rounded-xl border border-dashed p-6 text-center text-[15px] ${
-                        isDark ? "border-white/20 text-white/50" : "border-black/20 text-[#6c7488]"
+                        isDark ? "border-white/25 text-white/62" : "border-black/20 text-[#6c7488]"
                       }`}
                     >
                       No public posts yet.
@@ -662,14 +664,14 @@ export function MyProfileContent() {
                       <article
                         key={`public-${post.id}`}
                         className={`rounded-2xl border p-4 ${
-                          isDark ? "border-white/15 bg-black/15" : "border-black/10 bg-white"
+                          isDark ? "border-white/20 bg-[#1a1c22]" : "border-black/10 bg-white"
                         }`}
                       >
                         <div className="mb-3 flex items-start justify-between gap-3">
                           <div className="flex items-center gap-3">
                             <div
                               className={`flex h-10 w-10 items-center justify-center rounded-full text-[13px] font-semibold ${
-                                isDark ? "bg-white/10 text-white" : "bg-[#eef1f6] text-[#2b3343]"
+                                isDark ? "bg-white/15 text-white" : "bg-[#eef1f6] text-[#2b3343]"
                               }`}
                             >
                               {post.author.slice(0, 1).toUpperCase()}
@@ -678,7 +680,7 @@ export function MyProfileContent() {
                               <p className={`text-[14px] font-semibold ${isDark ? "text-white" : "text-[#202634]"}`}>
                                 {post.author}
                               </p>
-                              <p className={`text-[12px] ${isDark ? "text-white/45" : "text-[#7b8498]"}`}>
+                              <p className={`text-[12px] ${isDark ? "text-white/55" : "text-[#7b8498]"}`}>
                                 {new Date(post.createdAt).toLocaleString()}
                               </p>
                             </div>
@@ -687,7 +689,7 @@ export function MyProfileContent() {
                           <div className="flex items-center gap-2">
                             <span
                               className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-                                isDark ? "bg-white/10 text-white/75" : "bg-black/6 text-[#475064]"
+                                isDark ? "bg-white/14 text-white/80" : "bg-black/6 text-[#475064]"
                               }`}
                             >
                               {post.section}
@@ -702,7 +704,7 @@ export function MyProfileContent() {
                           </div>
                         </div>
 
-                        <p className={`text-[15px] leading-relaxed ${isDark ? "text-white/85" : "text-[#313949]"}`}>
+                        <p className={`text-[15px] leading-relaxed ${isDark ? "text-white/90" : "text-[#313949]"}`}>
                           {post.content}
                         </p>
 
@@ -717,7 +719,7 @@ export function MyProfileContent() {
                               type="button"
                               className={`rounded-full border px-3 py-1 text-[12px] font-semibold transition ${
                                 isDark
-                                  ? "border-white/15 bg-white/5 text-white/70 hover:bg-white/10"
+                                  ? "border-white/20 bg-[#1f2229] text-white/80 hover:bg-[#2a2f39]"
                                   : "border-black/10 bg-[#f8f9fb] text-[#4a556b] hover:bg-[#eef1f6]"
                               }`}
                             >

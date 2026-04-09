@@ -181,10 +181,10 @@ export default function PoetsPage() {
   const featuredPoet = filteredPoets[0] ?? POETS[0];
 
   return (
-    <main className={`relative min-h-screen transition-colors duration-300 ${isDark ? "text-white" : "text-[#182218]"}`}>
+    <main className={`relative min-h-screen transition-colors duration-300 ${isDark ? "bg-[#0e1117] text-white" : "bg-[#f3f5f8] text-[#10131a]"}`}>
       <nav
         className={`sticky top-0 z-40 border-b backdrop-blur-md transition-colors ${
-          isDark ? "border-white/10 bg-[#13161b]/85" : "border-black/10 bg-[#f3f7ef]/86"
+          isDark ? "border-white/15 bg-[#17181d]/88" : "border-black/10 bg-[#f3f7ef]/86"
         }`}
       >
         <div className="mx-auto flex h-16 max-w-full items-center justify-between px-4 md:px-8">
@@ -240,7 +240,7 @@ export default function PoetsPage() {
         <div className="md:col-span-12">
           <section
             className={`rounded-[26px] border p-5 md:p-6 ${
-              isDark ? "border-white/12 bg-[#171b22]/92" : "border-black/10 bg-white/94"
+              isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white/94"
             } mb-6 md:mb-7`}
           >
             <div className="grid gap-5 md:grid-cols-[1.25fr_0.75fr] md:items-end">
@@ -248,7 +248,7 @@ export default function PoetsPage() {
                 <p className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${isDark ? "text-white/45" : "text-[#617860]"}`}>
                   Search Poets
                 </p>
-                <div className={`mt-3 flex items-center gap-2 rounded-full border px-4 py-2.5 ${isDark ? "border-white/12 bg-white/5" : "border-black/10 bg-[#f4f8f0]"}`}>
+                <div className={`mt-3 flex items-center gap-2 rounded-full border px-4 py-2.5 ${isDark ? "border-white/20 bg-[#101318]" : "border-black/10 bg-[#f4f8f0]"}`}>
                   <svg viewBox="0 0 24 24" className={`h-4 w-4 ${isDark ? "text-white/45" : "text-[#738671]"}`} fill="none" stroke="currentColor" strokeWidth="2">
                     <circle cx="11" cy="11" r="7" />
                     <path d="M20 20l-3.2-3.2" />
@@ -287,7 +287,7 @@ export default function PoetsPage() {
             </div>
           </section>
 
-          <header className={`overflow-hidden rounded-[32px] border ${isDark ? "border-white/12 bg-[#181d24]" : "border-black/10 bg-white"}`}>
+          <header className={`overflow-hidden rounded-[32px] border ${isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white"}`}>
             <div className="grid gap-0 lg:grid-cols-[1.3fr_1fr]">
               <div className="p-6 md:p-8">
                 <p className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${isDark ? "text-white/45" : "text-[#5e775f]"}`}>
@@ -349,7 +349,7 @@ export default function PoetsPage() {
 
           <div className="mt-5 space-y-4">
             {filteredPoets.map((poet) => (
-              <article key={poet.id} className={`rounded-[24px] border p-5 ${isDark ? "border-white/12 bg-[#181d24]/88" : "border-black/10 bg-white/94"}`}>
+              <article key={poet.id} className={`rounded-[24px] border p-5 ${isDark ? "border-white/20 bg-[#1a1c22]" : "border-black/10 bg-white/94"}`}>
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start gap-3">

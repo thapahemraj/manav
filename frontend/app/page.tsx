@@ -96,10 +96,10 @@ export default function PublicFeed() {
   const totalAuthors = new Set(allPublicPosts.map((post) => post.author)).size;
 
   return (
-    <main className={`relative min-h-screen transition-colors duration-300 ${isDark ? "text-white" : "text-[#182218]"}`}>
+    <main className={`relative min-h-screen transition-colors duration-300 ${isDark ? "bg-[#0e1117] text-white" : "bg-[#f3f5f8] text-[#10131a]"}`}>
       <nav
         className={`sticky top-0 z-40 border-b backdrop-blur-md transition-colors ${
-          isDark ? "border-white/10 bg-[#13161b]/85" : "border-black/10 bg-[#f3f7ef]/86"
+          isDark ? "border-white/15 bg-[#17181d]/88" : "border-black/10 bg-[#f3f7ef]/86"
         }`}
       >
         <div className="mx-auto flex h-16 max-w-full items-center justify-between px-4 md:px-8">
@@ -160,7 +160,7 @@ export default function PublicFeed() {
 
       <section className="mx-auto grid w-[80vw] max-w-none gap-7 px-1 py-7 md:grid-cols-12 md:py-10">
         <div className="md:col-span-8">
-          <header className={`rounded-[32px] border p-6 md:p-8 ${isDark ? "border-white/12 bg-[#171a20]/84" : "border-black/10 bg-white/92"}`}>
+          <header className={`rounded-[32px] border p-6 md:p-8 ${isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white/92"}`}>
             <p className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${isDark ? "text-white/45" : "text-[#5d755f]"}`}>
               Community Timeline
             </p>
@@ -171,9 +171,9 @@ export default function PublicFeed() {
               Discover fresh writing, reflections, and verses from every section in one curated stream.
             </p>
 
-            <div className={`mt-6 rounded-2xl border p-3.5 md:p-4 ${isDark ? "border-white/10 bg-white/[0.03]" : "border-black/10 bg-[#f4f8f0]"}`}>
+            <div className={`mt-6 rounded-2xl border p-3.5 md:p-4 ${isDark ? "border-white/20 bg-[#1c2027]" : "border-black/10 bg-[#f4f8f0]"}`}>
               <div className="flex flex-wrap items-center gap-2">
-                <div className={`flex min-w-64 flex-1 items-center gap-2 rounded-full border px-4 py-2.5 ${isDark ? "border-white/12 bg-white/5" : "border-black/10 bg-[#fbfdf9]"}`}>
+                <div className={`flex min-w-64 flex-1 items-center gap-2 rounded-full border px-4 py-2.5 ${isDark ? "border-white/20 bg-[#101318]" : "border-black/10 bg-[#fbfdf9]"}`}>
                   <svg viewBox="0 0 24 24" className={`h-4 w-4 ${isDark ? "text-white/45" : "text-[#7a8497]"}`} fill="none" stroke="currentColor" strokeWidth="2">
                     <circle cx="11" cy="11" r="7" />
                     <path d="M20 20l-3.2-3.2" />
@@ -190,7 +190,7 @@ export default function PublicFeed() {
                 <button
                   type="button"
                   onClick={() => setSortOrder((prev) => (prev === "latest" ? "oldest" : "latest"))}
-                  className={`rounded-full border px-4 py-2 text-[12px] font-semibold tracking-[0.08em] transition ${isDark ? "border-white/15 bg-white/5 text-white/80 hover:bg-white/10" : "border-black/10 bg-[#fbfdf9] text-[#2f4533] hover:bg-[#edf4ea]"}`}
+                  className={`rounded-full border px-4 py-2 text-[12px] font-semibold tracking-[0.08em] transition ${isDark ? "border-white/20 bg-[#1f2229] text-white/85 hover:bg-[#2a2f39]" : "border-black/10 bg-[#fbfdf9] text-[#2f4533] hover:bg-[#edf4ea]"}`}
                 >
                   {sortOrder === "latest" ? "LATEST" : "OLDEST"}
                 </button>
@@ -233,7 +233,7 @@ export default function PublicFeed() {
           ) : null}
 
           {featuredPost ? (
-            <article className={`mt-5 rounded-[30px] border p-6 md:p-7 ${isDark ? "border-white/12 bg-[#181c23]/84" : "border-black/10 bg-white/94"}`}>
+            <article className={`mt-5 rounded-[30px] border p-6 md:p-7 ${isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white/94"}`}>
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${isDark ? "text-white/42" : "text-[#658169]"}`}>
@@ -279,7 +279,7 @@ export default function PublicFeed() {
               </div>
             ) : (
               displayPosts.slice(featuredPost ? 1 : 0).map((post) => (
-                <article key={`public-${post.id}`} className={`rounded-2xl border p-4 ${isDark ? "border-white/12 bg-[#181c23]/72" : "border-black/10 bg-white/92"}`}>
+                <article key={`public-${post.id}`} className={`rounded-2xl border p-4 ${isDark ? "border-white/20 bg-[#1a1c22]" : "border-black/10 bg-white/92"}`}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <div className={`flex h-10 w-10 items-center justify-center rounded-full text-[13px] font-semibold ${isDark ? "bg-white/10 text-white" : "bg-[#edf4ea] text-[#2f4732]"}`}>
@@ -307,7 +307,7 @@ export default function PublicFeed() {
 
         <aside className="md:col-span-4">
           <div className="space-y-4 md:sticky md:top-24">
-            <section className={`rounded-[26px] border p-5 ${isDark ? "border-white/12 bg-[#171a20]/84" : "border-black/10 bg-white/94"}`}>
+            <section className={`rounded-[26px] border p-5 ${isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white/94"}`}>
               <p className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${isDark ? "text-white/45" : "text-[#68748a]"}`}>
                 Feed Stats
               </p>
@@ -327,7 +327,7 @@ export default function PublicFeed() {
               </div>
             </section>
 
-            <section className={`rounded-[26px] border p-5 ${isDark ? "border-white/12 bg-[#171a20]/84" : "border-black/10 bg-white/94"}`}>
+            <section className={`rounded-[26px] border p-5 ${isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white/94"}`}>
               <p className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${isDark ? "text-white/45" : "text-[#68748a]"}`}>
                 Quick Access
               </p>
