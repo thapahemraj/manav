@@ -275,39 +275,12 @@ export function MyProfileContent() {
 
   return (
     <main
-      className={`relative isolate min-h-screen overflow-hidden px-2 py-5 transition-colors duration-300 sm:px-4 md:overflow-hidden md:p-10 ${isDark ? "text-white" : "text-[#10131a]"}`}
+      className={`relative isolate min-h-screen px-2 py-5 transition-colors duration-300 sm:px-4 md:h-screen md:overflow-hidden md:p-10 ${isDark ? "text-white" : "text-[#10131a]"}`}
     >
-      <div className="relative z-10">
-      <button
-        type="button"
-        onClick={() => setIsDark((prev) => !prev)}
-        className={`fixed right-4 top-4 z-20 flex items-center gap-3 rounded-full border px-3 py-2 shadow-lg transition md:right-8 md:top-8 ${
-          isDark
-            ? "border-white/20 bg-[#1b1e24] text-white"
-            : "border-black/10 bg-white text-[#10131a]"
-        }`}
-        aria-label="Toggle light and dark mode"
-      >
-        <span className="text-[11px] font-semibold tracking-[0.08em]">
-          {isDark ? "DARK" : "LIGHT"}
-        </span>
-        <span
-          className={`relative h-6 w-11 rounded-full transition ${
-            isDark ? "bg-[#2ce88f]" : "bg-[#d9dde5]"
-          }`}
-        >
-          <span
-            className={`absolute top-0.5 h-5 w-5 rounded-full transition ${
-              isDark ? "bg-[#0b1112]" : "bg-[#10131a]"
-            }`}
-            style={{ left: isDark ? "22px" : "2px" }}
-          />
-        </span>
-      </button>
-
-      <div className="flex min-h-[calc(100vh-2.5rem)] w-full items-center justify-center md:h-[calc(100vh-5rem)] md:min-h-0 md:items-center md:justify-start md:gap-14">
+      <div className="relative z-10 h-full">
+      <div className="flex min-h-[calc(100vh-2.5rem)] w-full items-center justify-center md:h-full md:min-h-0 md:items-start md:justify-start md:gap-14">
         <aside
-          className={`flex w-full max-w-sm flex-col rounded-[38px] border px-6 py-5 shadow-[0_30px_80px_rgba(0,0,0,0.25)] transition-colors duration-300 md:px-7 md:py-6 ${
+          className={`flex w-full max-w-sm flex-col rounded-[38px] border px-6 py-5 shadow-[0_30px_80px_rgba(0,0,0,0.25)] transition-colors duration-300 md:h-full md:overflow-hidden md:px-7 md:py-6 ${
             isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white"
           }`}
         >
@@ -366,34 +339,33 @@ export function MyProfileContent() {
               </button>
             </div>
 
+            <div
+              className={`rounded-2xl border p-2 ${
+                isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f8f9fb]"
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => {
+                  logout();
+                  router.push("/login");
+                }}
+                className={`rounded-full border px-4 py-2.5 text-[13px] font-semibold transition ${
+                  isDark
+                    ? "border-red-500/35 bg-white/5 text-red-300 hover:bg-red-500/12"
+                    : "border-red-300/60 bg-white text-red-500 hover:bg-red-50"
+                }`}
+              >
+                Logout
+              </button>
+            </div>
+
             <button
               type="button"
               onClick={openEditProfile}
               className="w-full rounded-full bg-[#2ce88f] px-4 py-2.5 text-[15px] font-bold text-[#0b1112] transition hover:bg-[#45f39f]"
             >
               Edit Profile
-            </button>
-
-            <Link
-              href="/"
-              className="w-full rounded-full border border-[#2ce88f]/50 px-4 py-2.5 text-center text-[14px] font-semibold text-[#8cf8c1] transition hover:bg-[#2ce88f]/15"
-            >
-              View Feed
-            </Link>
-
-            <button
-              type="button"
-              onClick={() => {
-                logout();
-                router.push("/login");
-              }}
-              className={`w-full rounded-full border px-4 py-2.5 text-[14px] font-semibold transition ${
-                isDark
-                  ? "border-red-500/40 text-red-400 hover:bg-red-500/15"
-                  : "border-red-400/40 text-red-500 hover:bg-red-400/15"
-              }`}
-            >
-              Logout
             </button>
 
             <div
@@ -459,34 +431,82 @@ export function MyProfileContent() {
           </div>
         </aside>
 
-        <section className="hidden h-full flex-1 overflow-y-auto md:flex md:flex-col md:pr-2">
-          <div className={`border-b ${isDark ? "border-white/10" : "border-[#e2e2e2]"}`}>
-            <div className="mx-auto flex w-full max-w-7xl flex-wrap justify-center px-6">
-              {favoriteTabs.map((tab) => {
-                const isActive = tab === activeTab;
+        <section className="hidden min-w-0 flex-1 self-stretch md:flex md:h-full md:min-h-0 md:flex-col md:overflow-hidden">
+          <div className="shrink-0 px-6 pb-4 pt-1">
+            <div
+              className={`mx-auto flex w-full max-w-7xl items-center gap-3 rounded-[28px] border p-2.5 shadow-sm ${
+                isDark ? "border-white/10 bg-white/[0.04]" : "border-black/10 bg-[#f8faf5]"
+              }`}
+            >
+              <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto">
+                {favoriteTabs.map((tab) => {
+                  const isActive = tab === activeTab;
 
-                return (
-                  <button
-                    key={tab}
-                    type="button"
-                    onClick={() => setActiveTab(tab)}
-                    className={`px-6 py-5 text-[20px] font-semibold tracking-[0.02em] transition ${
-                      isActive
-                        ? "bg-[#2ce88f] text-[#0b1112]"
-                        : isDark
-                          ? "text-white/80 hover:bg-white/5"
-                          : "text-[#2a2a2a] hover:bg-[#f2f2f2]"
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={tab}
+                      type="button"
+                      onClick={() => setActiveTab(tab)}
+                      className={`shrink-0 rounded-full px-4 py-2.5 text-[13px] font-semibold tracking-[0.11em] transition ${
+                        isActive
+                          ? "bg-[#2ce88f] text-[#0b1112] shadow-[0_8px_24px_rgba(44,232,143,0.24)]"
+                          : isDark
+                            ? "text-white/75 hover:bg-white/6"
+                            : "text-[#3c4d42] hover:bg-white"
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="shrink-0 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsDark((prev) => !prev)}
+                  className={`rounded-full border px-3 py-2 transition ${
+                    isDark
+                      ? "border-white/20 bg-[#1b1e24] text-white"
+                      : "border-black/10 bg-white text-[#10131a]"
+                  }`}
+                  aria-label="Toggle light and dark mode"
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="text-[11px] font-semibold tracking-[0.08em]">
+                      {isDark ? "DARK" : "LIGHT"}
+                    </span>
+                    <span
+                      className={`relative h-5 w-9 rounded-full transition ${
+                        isDark ? "bg-[#2ce88f]" : "bg-[#d9dde5]"
+                      }`}
+                    >
+                      <span
+                        className={`absolute top-0.5 h-4 w-4 rounded-full transition ${
+                          isDark ? "bg-[#0b1112]" : "bg-[#10131a]"
+                        }`}
+                        style={{ left: isDark ? "18px" : "2px" }}
+                      />
+                    </span>
+                  </span>
+                </button>
+
+                <Link
+                  href="/"
+                  className={`rounded-full border px-4 py-2 text-[12px] font-semibold tracking-[0.08em] transition ${
+                    isDark
+                      ? "border-[#2ce88f]/45 bg-[#2ce88f]/15 text-[#a4f9cf] hover:bg-[#2ce88f]/25"
+                      : "border-[#0a8a5b]/35 bg-[#eaf7ef] text-[#0a8a5b] hover:bg-[#dff2e7]"
+                  }`}
+                >
+                  VIEW FEED
+                </Link>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-1 items-center justify-center px-6 py-10">
-            <div className="flex w-full max-w-7xl flex-col gap-5">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 pb-10 pr-2 [scrollbar-gutter:stable]">
+            <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 pt-2">
               <div
                 className={`rounded-[28px] border p-5 shadow-[0_18px_40px_rgba(0,0,0,0.18)] ${
                   isDark ? "border-white/15 bg-white/5" : "border-black/10 bg-[#f8f9fb]"
@@ -588,49 +608,6 @@ export function MyProfileContent() {
                   </p>
                 ) : null}
 
-                <div className="mt-4 space-y-3">
-                  <p className={`text-[13px] font-semibold tracking-[0.08em] ${isDark ? "text-white/45" : "text-[#6b7488]"}`}>
-                    {activeTab} POSTS
-                  </p>
-
-                  {activePosts.length === 0 ? (
-                    <div
-                      className={`rounded-xl border border-dashed p-5 text-center text-[15px] ${
-                        isDark ? "border-white/20 text-white/50" : "border-black/20 text-[#6c7488]"
-                      }`}
-                    >
-                      No posts yet in this section.
-                    </div>
-                  ) : (
-                    activePosts.map((post) => (
-                      <article
-                        key={post.id}
-                        className={`rounded-xl border p-4 ${
-                          isDark ? "border-white/15 bg-black/15" : "border-black/10 bg-white"
-                        }`}
-                      >
-                        <div className="mb-2 flex items-center justify-between">
-                          <p className={`text-[14px] font-semibold ${isDark ? "text-white" : "text-[#202634]"}`}>
-                            {post.author}
-                          </p>
-                          <span
-                            className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-                              isDark ? "bg-[#2ce88f]/15 text-[#8cf8c1]" : "bg-[#00a86b]/12 text-[#0a8a5b]"
-                            }`}
-                          >
-                            {post.visibility.toUpperCase()}
-                          </span>
-                        </div>
-                        <p className={`text-[15px] leading-relaxed ${isDark ? "text-white/85" : "text-[#313949]"}`}>
-                          {post.content}
-                        </p>
-                        <p className={`mt-2 text-[12px] ${isDark ? "text-white/45" : "text-[#7b8498]"}`}>
-                          {new Date(post.createdAt).toLocaleString()}
-                        </p>
-                      </article>
-                    ))
-                  )}
-                </div>
               </div>
 
               <div
