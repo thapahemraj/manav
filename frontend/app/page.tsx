@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/context/auth";
+import { useTheme } from "@/app/context/theme";
+import { SiteNavbar } from "@/app/components/site-navbar";
 
 type UserPost = {
   id: string;
@@ -15,7 +17,7 @@ type UserPost = {
 
 const DEFAULT_POSTS: UserPost[] = [];
 
-const NAV_ITEMS = [
+const QUICK_ACCESS_ITEMS = [
   { label: "POETS", href: "/poets" },
   { label: "SHER", href: "/sher" },
   { label: "DICTIONARY", href: "/dictionary" },
@@ -44,7 +46,7 @@ function postPreview(content: string, max = 180) {
 
 export default function PublicFeed() {
   const { user } = useAuth();
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, setIsDark } = useTheme();
   const [allPublicPosts, setAllPublicPosts] = useState<UserPost[]>(DEFAULT_POSTS);
   const [apiError, setApiError] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
@@ -97,66 +99,7 @@ export default function PublicFeed() {
 
   return (
     <main className={`relative min-h-screen transition-colors duration-300 ${isDark ? "bg-[#0e1117] text-white" : "bg-[#f3f5f8] text-[#10131a]"}`}>
-      <nav
-        className={`sticky top-0 z-40 border-b backdrop-blur-md transition-colors ${
-          isDark ? "border-white/15 bg-[#17181d]/88" : "border-black/10 bg-[#f3f7ef]/86"
-        }`}
-      >
-        <div className="mx-auto flex h-16 max-w-full items-center justify-between px-4 md:px-8">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-[24px] font-bold tracking-[-0.02em]">
-              Manav
-            </span>
-          </Link>
-
-          <div className="hidden items-center gap-8 md:flex">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`text-[13px] font-semibold tracking-[0.08em] transition hover:opacity-70 ${
-                  isDark ? "text-white/80" : "text-[#203022]"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setIsDark((prev) => !prev)}
-              className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-semibold tracking-[0.08em] transition ${
-                isDark
-                  ? "border-white/20 bg-[#1b1e24]"
-                  : "border-black/10 bg-white"
-              }`}
-              aria-label="Toggle theme"
-            >
-              <span>{isDark ? "DARK" : "LIGHT"}</span>
-              <span
-                className={`relative h-4 w-8 rounded-full transition ${
-                  isDark ? "bg-[#2ce88f]" : "bg-[#d9dde5]"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 h-3 w-3 rounded-full transition ${
-                    isDark ? "left-4 bg-[#0b1112]" : "left-0.5 bg-[#10131a]"
-                  }`}
-                />
-              </span>
-            </button>
-
-            <Link
-              href={user ? "/my-profile" : "/login"}
-              className="rounded-full bg-[#2ce88f] px-4 py-2 text-[12px] font-bold tracking-[0.08em] text-[#0b1112] transition hover:bg-[#45f39f]"
-            >
-              {user ? "PROFILE" : "SIGN IN"}
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <SiteNavbar isDark={isDark} onToggleTheme={() => setIsDark((prev) => !prev)} />
 
       <section className="mx-auto grid w-[80vw] max-w-none gap-7 px-1 py-7 md:grid-cols-12 md:py-10">
         <div className="md:col-span-8">
@@ -332,7 +275,7 @@ export default function PublicFeed() {
                 Quick Access
               </p>
               <div className="mt-3 grid grid-cols-2 gap-2">
-                {NAV_ITEMS.slice(0, 6).map((item) => (
+                {QUICK_ACCESS_ITEMS.slice(0, 6).map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}

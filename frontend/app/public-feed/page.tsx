@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/app/context/theme";
 
 type UserPost = {
   id: string;
@@ -13,12 +14,12 @@ type UserPost = {
 };
 
 export default function PublicFeedPage() {
+  const { isDark, setIsDark } = useTheme();
   const [posts, setPosts] = useState<UserPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [activeSection, setActiveSection] = useState("All");
-  const [isDark, setIsDark] = useState(false);
 
   const backendUrl = "http://localhost:3001";
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/app/context/auth";
+import { useTheme } from "@/app/context/theme";
 import { ProtectedRoute } from "@/app/components/protected-route";
 
 type UserPost = {
@@ -63,8 +64,8 @@ const saveCachedProfile = (profile: UserProfile): void => {
 export function MyProfileContent() {
   const router = useRouter();
   const { logout } = useAuth();
+  const { isDark, setIsDark } = useTheme();
   const [isPublic, setIsPublic] = useState(true);
-  const [isDark, setIsDark] = useState(false);
   const [activeTab, setActiveTab] = useState("POETRY");
 
   const favoriteTabs = ["POETRY", "AAMOZISH", "WORD", "BOOKS", "POET", "SUFINAMA", "HINDWI"];

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/app/context/auth";
+import { useTheme } from "@/app/context/theme";
 
 type LoginResponse = {
   id: string;
@@ -17,7 +18,7 @@ type LoginResponse = {
 export default function LoginPage() {
   const router = useRouter();
   const { isAuthenticated, isLoadingAuth, login } = useAuth();
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, setIsDark } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");

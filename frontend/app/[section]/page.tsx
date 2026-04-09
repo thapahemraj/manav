@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { useTheme } from "@/app/context/theme";
+import { SiteNavbar } from "@/app/components/site-navbar";
 
 type UserPost = {
   id: string;
@@ -72,25 +74,12 @@ const SECTION_MAP: Record<string, SectionConfig> = {
   },
 };
 
-const NAV_ITEMS = [
-  { label: "POETS", href: "/poets" },
-  { label: "SHER", href: "/sher" },
-  { label: "DICTIONARY", href: "/dictionary" },
-  { label: "VIDEOS", href: "/videos" },
-  { label: "E-BOOKS", href: "/e-books" },
-  { label: "PROSE", href: "/prose" },
-  { label: "BLOG", href: "/blog" },
-  { label: "SHAYARI", href: "/shayari" },
-  { label: "QUIZ", href: "/quiz" },
-  { label: "MORE", href: "/more" },
-];
-
 export default function SectionPage() {
   const params = useParams<{ section: string }>();
   const sectionSlug = String(params?.section ?? "").toLowerCase();
   const section = SECTION_MAP[sectionSlug];
 
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, setIsDark } = useTheme();
   const [query, setQuery] = useState("");
   const [posts, setPosts] = useState<UserPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -160,63 +149,11 @@ export default function SectionPage() {
     <main className={`relative isolate min-h-screen overflow-hidden transition-colors duration-300 ${isDark ? "bg-[#0e1117] text-white" : "bg-[#f3f5f8] text-[#10131a]"}`}>
 
       <div className="relative z-10">
-      <nav
-        className={`sticky top-0 z-40 border-b transition-colors ${
-          isDark ? "border-white/15 bg-[#17181d]/88 backdrop-blur-md" : "border-black/10 bg-[#f3f7ef]/86 backdrop-blur-md"
-        }`}
-      >
-        <div className="mx-auto flex h-16 max-w-full items-center justify-between px-4 md:px-8">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-[24px] font-bold tracking-[-0.02em]">Manav</span>
-          </Link>
-
-          <div className="hidden items-center gap-8 md:flex">
-            {NAV_ITEMS.map((item) => {
-              const active = item.href === `/${sectionSlug}`;
-
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`text-[13px] font-semibold tracking-[0.08em] transition hover:opacity-70 ${
-                    active
-                      ? isDark
-                        ? "text-[#8cf8c1]"
-                        : "text-[#0a8a5b]"
-                      : isDark
-                        ? "text-white/80"
-                        : "text-[#203022]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setIsDark((prev) => !prev)}
-              className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-semibold tracking-[0.08em] transition ${
-                isDark ? "border-white/20 bg-[#1b1e24]" : "border-black/10 bg-white"
-              }`}
-              aria-label="Toggle theme"
-            >
-              <span>{isDark ? "DARK" : "LIGHT"}</span>
-              <span className={`relative h-4 w-8 rounded-full transition ${isDark ? "bg-[#2ce88f]" : "bg-[#d9dde5]"}`}>
-                <span className={`absolute top-0.5 h-3 w-3 rounded-full transition ${isDark ? "left-4 bg-[#0b1112]" : "left-0.5 bg-[#10131a]"}`} />
-              </span>
-            </button>
-            <Link
-              href="/"
-              className={`rounded-full border px-4 py-2 text-[13px] font-semibold transition ${isDark ? "border-white/20 bg-[#1f2229] text-white/85 hover:bg-[#2a2f39]" : "border-black/10 bg-white/92 text-[#203022] hover:bg-[#ebf3e9]"}`}
-            >
-              Home
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <SiteNavbar
+        isDark={isDark}
+        onToggleTheme={() => setIsDark((prev) => !prev)}
+        activeHref={`/${sectionSlug}`}
+      />
 
       <div className="px-2 py-5 sm:px-4 md:p-10">
         <div className={`rounded-2xl border p-5 ${isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white"}`}>
