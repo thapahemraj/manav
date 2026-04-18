@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/auth";
 
@@ -35,16 +36,14 @@ const NAV_ITEMS = [
     label: "Links",
     href: "/links",
     dropdownItems: [
-      { label: "Home Page", href: "/links?topic=Home%20Page" },
       { label: "News", href: "/links?topic=News" },
       { label: "Literature", href: "/links?topic=Literature" },
       { label: "Activities", href: "/links?topic=Activities" },
-      { label: "Special report", href: "/links?topic=Special%20report" },
+      { label: "Special Report", href: "/links?topic=Special%20Report" },
       { label: "Health", href: "/links?topic=Health" },
       { label: "Interesting", href: "/links?topic=Interesting" },
       { label: "Sport", href: "/links?topic=Sport" },
       { label: "Entertainment", href: "/links?topic=Entertainment" },
-      { label: "Donate", href: "/donate" },
     ],
   },
   { label: "EBook Download", href: "/ebook-download" },
@@ -53,27 +52,16 @@ const NAV_ITEMS = [
 
 export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProps) {
   const { user } = useAuth();
+  const pathname = usePathname();
   const [cachedAvatarUrl, setCachedAvatarUrl] = useState<string>("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(null);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const isAdmin = ["admin", "superadmin"].includes(user?.role?.toLowerCase?.() ?? "");
   const visibleNavItems = isAdmin
     ? [...NAV_ITEMS, { label: "Admin", href: "/admin" }]
     : NAV_ITEMS;
-  const mobileExploreItems = [
-    { label: "Home", href: "/" },
-    { label: "Poets", href: "/poets" },
-    { label: "Public Feed", href: "/public-feed" },
-    { label: "Donate", href: "/donate" },
-    { label: "Archives", href: "/archives" },
-    { label: "EBook Download", href: "/ebook-download" },
-  ];
-  const mobileCommunityItems = [
-    { label: "About Us", href: "/about-us" },
-    { label: "Contact Us", href: "/contact-us" },
-    { label: "Links", href: "/links" },
-    { label: "My Profile", href: "/my-profile" },
-    { label: "Login", href: "/login" },
-  ];
+  const currentPath = activeHref ?? pathname;
 
   useEffect(() => {
     if (!user?.id || typeof window === "undefined") {
@@ -115,6 +103,12 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setOpenDesktopDropdown(null);
+    setOpenMobileDropdown(null);
+  }, [pathname]);
+
   const avatarSrc =
     cachedAvatarUrl ||
     user?.avatarUrl?.trim() ||
@@ -122,7 +116,7 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
 
   return (
     <nav
-      className={`sticky top-0 z-40 border-b backdrop-blur-md transition-colors ${
+      className={`relative sticky top-0 z-40 border-b backdrop-blur-md transition-colors ${
         isDark ? "border-white/15 bg-[#17181d]/88" : "border-black/10 bg-[#f3f7ef]/86"
       }`}
     >
@@ -133,13 +127,21 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
 
         <div className="hidden items-center gap-8 lg:flex">
           {visibleNavItems.map((item) => {
-            const isActive = activeHref === item.href || (item.href === "/links" && activeHref?.startsWith("/links"));
+            const isActive = currentPath === item.href || (item.href === "/links" && currentPath?.startsWith("/links"));
 
             if (item.dropdownItems?.length) {
+              const isDropdownOpen = openDesktopDropdown === item.label;
+
               return (
-                <div key={item.label} className="group relative">
+                <div key={item.label} className="relative">
                   <Link
                     href={item.href}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setOpenDesktopDropdown((prev) => (prev === item.label ? null : item.label));
+                    }}
+                    aria-expanded={isDropdownOpen}
+                    aria-haspopup="menu"
                     className={`flex items-center gap-1 text-[14px] font-semibold tracking-[0.08em] transition hover:opacity-70 ${
                       isActive
                         ? isDark
@@ -159,7 +161,9 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
                   </Link>
 
                   <div
-                    className={`invisible absolute left-0 top-full z-50 mt-2 w-52 translate-y-1 rounded-2xl border p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${
+                    className={`absolute left-0 top-full z-50 mt-2 w-52 rounded-2xl border p-2 shadow-xl transition-all duration-200 ${
+                      isDropdownOpen ? "visible translate-y-0 opacity-100" : "invisible translate-y-1 opacity-0"
+                    } ${
                       isDark ? "border-white/20 bg-[#17181d]" : "border-black/10 bg-white"
                     }`}
                   >
@@ -167,6 +171,7 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
                       <Link
                         key={entry.label}
                         href={entry.href}
+                        onClick={() => setOpenDesktopDropdown(null)}
                         className={`block rounded-xl px-3 py-2 text-[12px] font-semibold transition ${
                           isDark
                             ? "text-white/80 hover:bg-white/8"
@@ -185,6 +190,7 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
               <Link
                 key={item.label}
                 href={item.href}
+                onClick={() => setOpenDesktopDropdown(null)}
                 className={`text-[14px] font-semibold tracking-[0.08em] transition hover:opacity-70 ${
                   isActive
                     ? isDark
@@ -318,13 +324,28 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
         </div>
       </div>
 
-      <div
-        id="site-mobile-navigation"
-        className={`lg:hidden ${isMenuOpen ? "block" : "hidden"}`}
-      >
-        <div className={`border-t px-4 py-4 ${isDark ? "border-white/15 bg-[#13161c]" : "border-black/10 bg-[#f8faf5]"}`}>
-          <div className="grid gap-3">
-            <div className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 ${isDark ? "border-white/10 bg-white/5" : "border-black/10 bg-white"}`}>
+      <div className="lg:hidden">
+        <button
+          type="button"
+          aria-label="Close mobile navigation backdrop"
+          onClick={() => setIsMenuOpen(false)}
+          className={`fixed inset-0 top-16 z-40 transition ${
+            isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+          } ${isDark ? "bg-black/55" : "bg-black/25"}`}
+        />
+
+        <div
+          id="site-mobile-navigation"
+          className={`fixed inset-0 top-16 z-50 flex justify-end pl-6 ${
+            isMenuOpen ? "pointer-events-auto" : "pointer-events-none"
+          }`}
+        >
+          <div className={`h-[calc(100vh-4rem)] w-[min(92vw,360px)] overflow-y-auto border border-r-0 rounded-l-3xl rounded-r-none p-3 shadow-2xl transition-transform duration-300 ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          } ${
+            isDark ? "border-white/15 bg-[#12171f]" : "border-black/10 bg-[#fdfefa]"
+          }`}>
+            <div className={`mb-3 flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 ${isDark ? "border-white/10 bg-white/5" : "border-black/10 bg-white"}`}>
               <button
                 type="button"
                 onClick={onToggleTheme}
@@ -359,71 +380,94 @@ export function SiteNavbar({ isDark, onToggleTheme, activeHref }: SiteNavbarProp
               )}
             </div>
 
-            <div className={`rounded-3xl border p-4 ${isDark ? "border-white/10 bg-[#151922]" : "border-black/10 bg-white"}`}>
-              <div className="grid w-full items-start gap-4 sm:gap-5" style={{ gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)" }}>
-                <div className="min-w-0 w-full">
-                  <p className={`text-[12px] font-bold tracking-[0.2em] ${isDark ? "text-[#8cf8c1]" : "text-[#0a8a5b]"}`}>
-                    EXPLORE
-                  </p>
-                  <div className="mt-3 grid min-w-0 gap-2">
-                    {mobileExploreItems.map((item) => {
-                      const isActive = activeHref === item.href || (item.href === "/public-feed" && activeHref?.startsWith("/public-feed"));
+            <div className="space-y-2">
+              {visibleNavItems.map((item) => {
+                const isActive =
+                  currentPath === item.href ||
+                  (item.href === "/links" && currentPath?.startsWith("/links"));
+                const isMobileDropdownOpen = openMobileDropdown === item.label;
 
-                      return (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          onClick={() => setIsMenuOpen(false)}
-                          className={`rounded-xl px-2.5 py-2 text-[13px] font-semibold transition ${
+                return (
+                  <div key={item.label} className={`rounded-2xl border ${isDark ? "border-white/10 bg-white/[0.03]" : "border-black/10 bg-white"}`}>
+                    {item.dropdownItems?.length ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setOpenMobileDropdown((prev) => (prev === item.label ? null : item.label))}
+                          aria-expanded={isMobileDropdownOpen}
+                          aria-controls={`mobile-dropdown-${item.label}`}
+                          className={`flex w-full items-center justify-between rounded-2xl px-3.5 py-3 text-left text-[13px] font-semibold tracking-[0.03em] transition ${
                             isActive
                               ? isDark
-                                ? "bg-[#2ce88f]/12 text-[#8cf8c1]"
-                                : "bg-[#0a8a5b]/10 text-[#0a8a5b]"
+                                ? "text-[#8cf8c1]"
+                                : "text-[#0a8a5b]"
                               : isDark
-                                ? "text-white/82 hover:bg-white/8"
+                                ? "text-white/85 hover:bg-white/8"
                                 : "text-[#203022] hover:bg-[#f2f6ef]"
                           }`}
                         >
-                          {item.label}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
+                          <span>{item.label}</span>
+                          <span className={`inline-flex items-center transition-transform ${isMobileDropdownOpen ? "rotate-180" : "rotate-0"}`} aria-hidden="true">
+                            <svg viewBox="0 0 20 20" className={`h-4 w-4 ${isDark ? "text-white/60" : "text-[#6c756e]"}`} fill="currentColor">
+                              <path d="M5.6 7.5L10 11.9l4.4-4.4 1 1L10 14 4.6 8.5l1-1z" />
+                            </svg>
+                          </span>
+                        </button>
 
-                <div className="min-w-0 w-full">
-                  <p className={`text-[12px] font-bold tracking-[0.2em] ${isDark ? "text-[#8cf8c1]" : "text-[#0a8a5b]"}`}>
-                    COMMUNITY
-                  </p>
-                  <div className="mt-3 grid min-w-0 gap-2">
-                    {mobileCommunityItems.map((item) => {
-                      const isHiddenByAuth = (item.href === "/login" && !!user) || (item.href === "/my-profile" && !user);
-                      if (isHiddenByAuth) return null;
-
-                      const isActive = activeHref === item.href || (item.href === "/links" && activeHref?.startsWith("/links"));
-
-                      return (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          onClick={() => setIsMenuOpen(false)}
-                          className={`rounded-xl px-2.5 py-2 text-[13px] font-semibold transition ${
-                            isActive
-                              ? isDark
-                                ? "bg-[#2ce88f]/12 text-[#8cf8c1]"
-                                : "bg-[#0a8a5b]/10 text-[#0a8a5b]"
-                              : isDark
-                                ? "text-white/82 hover:bg-white/8"
-                                : "text-[#203022] hover:bg-[#f2f6ef]"
+                        <div
+                          id={`mobile-dropdown-${item.label}`}
+                          className={`grid overflow-hidden transition-all duration-200 ${
+                            isMobileDropdownOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                           }`}
                         >
-                          {item.label}
-                        </Link>
-                      );
-                    })}
+                          <div className="min-h-0">
+                            <div className={`mx-2 mb-2 rounded-xl border p-1.5 ${isDark ? "border-white/10 bg-black/20" : "border-black/10 bg-[#f8fbf6]"}`}>
+                              {item.dropdownItems.map((entry) => (
+                                <Link
+                                  key={entry.label}
+                                  href={entry.href}
+                                  onClick={() => {
+                                    setIsMenuOpen(false);
+                                    setOpenMobileDropdown(null);
+                                  }}
+                                  className={`block rounded-lg px-2.5 py-2 text-[12px] font-medium transition ${
+                                    isDark
+                                      ? "text-white/80 hover:bg-white/8"
+                                      : "text-[#203022] hover:bg-white"
+                                  }`}
+                                >
+                                  {entry.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setOpenMobileDropdown(null);
+                        }}
+                        className={`flex items-center justify-between rounded-2xl px-3.5 py-3 text-[13px] font-semibold tracking-[0.03em] transition ${
+                          isActive
+                            ? isDark
+                              ? "text-[#8cf8c1]"
+                              : "text-[#0a8a5b]"
+                            : isDark
+                              ? "text-white/85 hover:bg-white/8"
+                              : "text-[#203022] hover:bg-[#f2f6ef]"
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                        <span className={`text-[11px] ${isDark ? "text-white/45" : "text-[#6c756e]"}`}>Go</span>
+                      </Link>
+                    )}
+
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </div>

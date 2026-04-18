@@ -368,6 +368,16 @@ export default function PublicFeed() {
     });
   };
 
+  const handleFeaturedWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    const container = featuredPostsCarouselRef.current;
+    if (!container) return;
+
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+    event.preventDefault();
+    container.scrollLeft += event.deltaY;
+  };
+
   const setPostMetrics = useCallback((
     postId: string,
     updates: Partial<Pick<UserPost, "likeCount" | "commentCount" | "likedByUser" | "favoritedByUser">>,
@@ -669,7 +679,7 @@ export default function PublicFeed() {
       </section>
 
       <article
-        className={`relative mx-auto mt-4 w-[92vw] md:mt-5 md:w-[80vw] max-w-none overflow-visible rounded-[24px] border p-3 md:rounded-[34px] md:p-7 ${isDark ? "border-white/15 bg-[#151922]" : "border-black/10 bg-white"}`}
+        className={`relative mx-auto mt-4 w-[92vw] md:mt-5 md:w-[80vw] max-w-none overflow-visible rounded-none border p-3 md:rounded-[34px] md:p-7 ${isDark ? "border-white/15 bg-[#151922]" : "border-black/10 bg-white"}`}
       >
             <div
               className={`pointer-events-none absolute inset-0 ${isDark ? "bg-[radial-gradient(circle_at_top_left,rgba(44,232,143,0.18),transparent_42%),radial-gradient(circle_at_bottom_right,rgba(163,217,255,0.1),transparent_45%)]" : "bg-[radial-gradient(circle_at_top_left,rgba(10,138,91,0.16),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(35,95,168,0.08),transparent_45%)]"}`}
@@ -694,7 +704,7 @@ export default function PublicFeed() {
               </div>
 
               {topFeaturedPosts.length === 0 ? (
-                <div className={`mt-6 rounded-2xl border border-dashed p-6 text-center text-[15px] ${isDark ? "border-white/20 text-white/55" : "border-black/20 text-[#5f7062]"}`}>
+                <div className={`mt-6 rounded-none border border-dashed p-6 text-center text-[15px] md:rounded-2xl ${isDark ? "border-white/20 text-white/55" : "border-black/20 text-[#5f7062]"}`}>
                   Featured posts will appear here once engagement starts building.
                 </div>
               ) : (
@@ -703,7 +713,7 @@ export default function PublicFeed() {
                     type="button"
                     onClick={() => scrollFeaturedPosts("prev")}
                     aria-label="Scroll featured posts left"
-                    className={`absolute left-[-30px] top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border transition md:h-11 md:w-11 ${isDark ? "border-white/20 bg-[#0f131a]/85 text-white hover:bg-[#1b2331]" : "border-black/10 bg-white/95 text-[#2f4c33] hover:bg-[#f0f5ef]"}`}
+                    className={`absolute left-[-18px] top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border transition md:left-[-30px] md:h-11 md:w-11 ${isDark ? "border-white/20 bg-[#0f131a]/90 text-white hover:bg-[#1b2331]" : "border-black/10 bg-white/95 text-[#2f4c33] hover:bg-[#f0f5ef]"}`}
                   >
                     <svg viewBox="0 0 24 24" className="h-4 w-4 md:h-5 md:w-5" fill="none" stroke="currentColor" strokeWidth="2.2">
                       <path d="M15 18l-6-6 6-6" />
@@ -712,6 +722,7 @@ export default function PublicFeed() {
 
                   <div
                     ref={featuredPostsCarouselRef}
+                    onWheel={handleFeaturedWheel}
                     className="flex snap-x snap-mandatory gap-0 overflow-x-auto scroll-smooth pb-1 md:gap-3.5 md:pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                   >
                   {topFeaturedPosts.map((post, index) => {
@@ -720,35 +731,37 @@ export default function PublicFeed() {
                     return (
                       <article
                         key={`featured-top-${post.id}`}
-                        className={`w-full min-w-full shrink-0 snap-start rounded-[18px] border p-3 md:w-[46%] md:min-w-[46%] md:rounded-[26px] md:p-5 xl:w-[30%] xl:min-w-[30%] ${isDark ? "border-white/18 bg-[#121722]" : "border-black/10 bg-[#fbfdfb]"}`}
+                        className={`w-full min-w-full shrink-0 snap-start rounded-none border p-3 md:w-[46%] md:min-w-[46%] md:rounded-[26px] md:p-5 xl:w-[30%] xl:min-w-[30%] ${isDark ? "border-white/18 bg-[#121722]" : "border-black/10 bg-[#fbfdfb]"}`}
                       >
                         <div className="md:hidden">
                           <div className="flex items-center justify-between gap-2">
-                            <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.08em] ${isDark ? "border-[#8cf8c1]/45 bg-[#2ce88f]/14 text-[#9af9ca]" : "border-[#0a8a5b]/25 bg-[#0a8a5b]/10 text-[#0a8a5b]"}`}>
+                            <span className={`rounded-none border px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.08em] ${isDark ? "border-[#8cf8c1]/45 bg-[#2ce88f]/14 text-[#9af9ca]" : "border-[#0a8a5b]/25 bg-[#0a8a5b]/10 text-[#0a8a5b]"}`}>
                               #{index + 1}
                             </span>
-                            <span className={`rounded-full border px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] ${isDark ? "border-white/15 text-white/75" : "border-black/10 text-[#566d58]"}`}>
+                            <span className={`rounded-none border px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] ${isDark ? "border-white/15 text-white/75" : "border-black/10 text-[#566d58]"}`}>
                               {post.section}
                             </span>
                           </div>
 
-                          <h3
-                            className="mt-2 line-clamp-2 text-[15px] font-semibold leading-snug tracking-[-0.01em]"
-                            style={{ fontFamily: "Georgia, Times New Roman, serif" }}
-                          >
-                            {postPreview(post.content, 84)}
-                          </h3>
+                          <div className={`mt-2 rounded-xl border px-2.5 py-2 ${isDark ? "border-white/12 bg-black/10" : "border-black/10 bg-white/75"}`}>
+                            <h3
+                              className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-[-0.01em]"
+                              style={{ fontFamily: "Georgia, Times New Roman, serif" }}
+                            >
+                              {postPreview(post.content, 84)}
+                            </h3>
 
-                          <p className={`mt-1 line-clamp-1 text-[11px] ${isDark ? "text-white/74" : "text-[#3f5542]"}`}>
-                            {postPreview(post.content, 90)}
-                          </p>
+                            <p className={`mt-1 line-clamp-1 text-[11px] ${isDark ? "text-white/74" : "text-[#3f5542]"}`}>
+                              {postPreview(post.content, 90)}
+                            </p>
+                          </div>
 
                           <div className={`mt-2.5 flex items-center justify-between border-t pt-2 ${isDark ? "border-white/12" : "border-black/10"}`}>
                             <div>
                               <p className={`text-[12px] font-semibold ${isDark ? "text-white" : "text-[#243b27]"}`}>{post.author}</p>
                               <p className={`text-[10px] ${isDark ? "text-white/45" : "text-[#68806b]"}`}>{formatPostDate(post.createdAt)}</p>
                             </div>
-                            <div className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold ${isDark ? "border-[#2ce88f]/30 bg-[#2ce88f]/10 text-[#9af9ca]" : "border-[#0a8a5b]/20 bg-[#e8f5ee] text-[#0a8a5b]"}`}>
+                            <div className={`rounded-none border px-2.5 py-1 text-[10px] font-semibold ${isDark ? "border-[#2ce88f]/30 bg-[#2ce88f]/10 text-[#9af9ca]" : "border-[#0a8a5b]/20 bg-[#e8f5ee] text-[#0a8a5b]"}`}>
                               {post.likeCount}L · {post.commentCount}C · {totalEngagement}T
                             </div>
                           </div>
@@ -804,7 +817,7 @@ export default function PublicFeed() {
                     type="button"
                     onClick={() => scrollFeaturedPosts("next")}
                     aria-label="Scroll featured posts right"
-                    className={`absolute right-[-30px] top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border transition md:h-11 md:w-11 ${isDark ? "border-white/20 bg-[#0f131a]/85 text-white hover:bg-[#1b2331]" : "border-black/10 bg-white/95 text-[#2f4c33] hover:bg-[#f0f5ef]"}`}
+                    className={`absolute right-[-18px] top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border transition md:right-[-30px] md:h-11 md:w-11 ${isDark ? "border-white/20 bg-[#0f131a]/90 text-white hover:bg-[#1b2331]" : "border-black/10 bg-white/95 text-[#2f4c33] hover:bg-[#f0f5ef]"}`}
                   >
                     <svg viewBox="0 0 24 24" className="h-4 w-4 md:h-5 md:w-5" fill="none" stroke="currentColor" strokeWidth="2.2">
                       <path d="M9 6l6 6-6 6" />
